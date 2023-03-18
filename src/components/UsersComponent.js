@@ -59,7 +59,7 @@ const UsersComponent = ({ userId }) => {
   window.onscroll = function () {
     if (
       window.innerHeight + window.scrollY >=
-      document.body.offsetHeight * 0.8
+      document.body.offsetHeight * 0.98
     ) {
       setIsLoading(true);
       setPage(userInfo.pagination.nextPage);
