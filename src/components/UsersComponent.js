@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
 import { v4 } from "uuid";
 import addToHistory from "../redux/historyActions";
 import "../Styles.css";
@@ -9,6 +10,7 @@ const UsersComponent = ({ userId }) => {
   const [userInfo, setUserInfo] = useState({ list: [], pagination: {} });
   const [page, setPage] = useState(1);
   const [firstLoad, setFirstLoad] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,7 +23,7 @@ const UsersComponent = ({ userId }) => {
       setFirstLoad(false);
       return;
     }
-    if (!page) return;
+    // if (!page) return;
     fetch(
       `http://sweeftdigital-intern.eu-central-1.elasticbeanstalk.com/user/${
         !userId ? `${page}/20` : `${userId}/friends/${page}/20`
@@ -49,6 +51,7 @@ const UsersComponent = ({ userId }) => {
             pagination: data.pagination,
           }));
         }
+        setIsLoading(false);
       })
       .catch((err) => console.error(err));
   }, [page, firstLoad, userId]);
@@ -58,6 +61,7 @@ const UsersComponent = ({ userId }) => {
       window.innerHeight + window.scrollY >=
       document.body.offsetHeight * 0.8
     ) {
+      setIsLoading(true);
       setPage(userInfo.pagination.nextPage);
     }
   };
@@ -65,10 +69,7 @@ const UsersComponent = ({ userId }) => {
   const handleUserClick = (user) => {
     navigate(`/user/${user.id}`);
     dispatch(addToHistory(user));
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -89,6 +90,9 @@ const UsersComponent = ({ userId }) => {
             </div>
           );
         })}
+      </div>
+      <div className="loader">
+        {isLoading && <PulseLoader color={"green"} loading={true} size={40} />}
       </div>
     </div>
   );

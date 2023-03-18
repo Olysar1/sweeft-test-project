@@ -15,12 +15,8 @@ const HistoryComponent = () => {
       {history.map((item) => {
         const temp = `${item.prefix} ${item.name} ${item.lastName}`;
         return (
-          <div
-            className="history-link"
-            onClick={() => handleHistoryClick(item.id)}
-            key={v4()}
-          >
-            <span>{temp}</span>
+          <div onClick={() => handleHistoryClick(item.id)} key={v4()}>
+            <span className="history-link">{temp}</span>
             {history.lastIndexOf(item) !== history.length - 1 ? " > " : ""}
           </div>
         );
