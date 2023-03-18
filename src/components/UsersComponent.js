@@ -17,7 +17,7 @@ const UsersComponent = ({ userId }) => {
   //GET DATA && CONDITIONALLY DECIDE WHO IS RENDERING THE COMPONENT
   useEffect(() => {
     if (!page) {
-      setPage(1);
+      setIsLoading(false);
       return;
     }
     if (firstLoad) {
@@ -63,14 +63,19 @@ const UsersComponent = ({ userId }) => {
         window.innerHeight + window.scrollY >=
         document.body.offsetHeight * 0.98
       ) {
-        setIsLoading(true);
-        setPage(userInfo.pagination.nextPage);
+        if (
+          page <=
+          Math.ceil(userInfo.pagination.total / userInfo.pagination.pageSize)
+        ) {
+          setIsLoading(true);
+          setPage(userInfo.pagination.nextPage);
+        }
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [userInfo]);
+  }, [userInfo, page]);
 
   //NAVIGATE TO USER ONCLICK
   const handleUserClick = (user) => {
