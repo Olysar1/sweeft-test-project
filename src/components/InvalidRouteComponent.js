@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 const InvalidRouteComponent = () => {
   const navigate = useNavigate();
 
+  //PLAN B - IN CASE OF BAD ROUTE
   const goHome = () => {
     navigate("/");
   };

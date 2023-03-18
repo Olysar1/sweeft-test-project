@@ -6,6 +6,7 @@ const HistoryComponent = () => {
   const history = useSelector((state) => state.history);
   const navigate = useNavigate();
 
+  //NAVIGATE TO USER ON CLICK IN HISTORY
   const handleHistoryClick = (id) => {
     navigate(`/user/${id}`);
   };

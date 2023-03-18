@@ -8,6 +8,7 @@ const SingleUserComponent = () => {
   const { userId } = useParams();
   const [sUserData, setSUserData] = useState({ company: {}, address: {} });
 
+  //GET USER DATA WITH ID
   useEffect(() => {
     fetch(
       `http://sweeftdigital-intern.eu-central-1.elasticbeanstalk.com/user/${userId}`

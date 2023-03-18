@@ -14,6 +14,7 @@ const UsersComponent = ({ userId }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //GET DATA && CONDITIONALLY DECIDE WHO IS RENDERING THE COMPONENT
   useEffect(() => {
     if (!page) {
       setPage(1);
@@ -23,7 +24,6 @@ const UsersComponent = ({ userId }) => {
       setFirstLoad(false);
       return;
     }
-    // if (!page) return;
     fetch(
       `http://sweeftdigital-intern.eu-central-1.elasticbeanstalk.com/user/${
         !userId ? `${page}/20` : `${userId}/friends/${page}/20`
@@ -56,16 +56,23 @@ const UsersComponent = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [page, firstLoad, userId]);
 
-  window.onscroll = function () {
-    if (
-      window.innerHeight + window.scrollY >=
-      document.body.offsetHeight * 0.98
-    ) {
-      setIsLoading(true);
-      setPage(userInfo.pagination.nextPage);
-    }
-  };
+  //SCROLLING
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight * 0.98
+      ) {
+        setIsLoading(true);
+        setPage(userInfo.pagination.nextPage);
+      }
+    };
 
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [userInfo]);
+
+  //NAVIGATE TO USER ONCLICK
   const handleUserClick = (user) => {
     navigate(`/user/${user.id}`);
     dispatch(addToHistory(user));

@@ -15,25 +15,24 @@ a {
   color: purple;
 }
 
-#friends-list {
-  margin: 0;
-}
-
 .item-wrapper {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   flex-wrap: wrap;
   margin: 0 6%;
 }
 
 .item-container {
-  display: flex;
   width: 23%;
-  flex-direction: column;
   margin: 10px;
   border-style: solid;
   border-width: 1px;
   cursor: pointer;
+}
+
+.item-container img {
+  width: 100%;
+  height: auto;
 }
 
 .inner-text {
@@ -77,4 +76,20 @@ a {
 .loader {
   display: flex;
   justify-content: center;
+}
+
+@media (max-width: 990px) {
+  .item-wrapper {
+    margin: 1%;
+  }
+
+  .item-container {
+    width: 47%;
+    margin: 10px 5px;
+  }
+
+  .header {
+    flex-direction: column;
+    height: auto;
+  }
 }
