@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../Styles.css";
+import HistoryComponent from "./HistoryComponent";
 import UsersComponent from "./UsersComponent";
 
 const SingleUserComponent = () => {
@@ -71,7 +72,7 @@ const SingleUserComponent = () => {
           </fieldset>
         </div>
         <div>
-          <div className="view-history">VINMES TRAKI</div>
+          <HistoryComponent className="view-history" />
           <h2>Friends:</h2>
           <UsersComponent className="friends-container" userId={userId} />
         </div>

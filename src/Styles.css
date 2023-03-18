@@ -11,6 +11,10 @@ fieldset {
   padding: 20px;
 }
 
+a {
+  color: purple;
+}
+
 #friends-list {
   margin: 0;
 }
@@ -57,8 +61,15 @@ fieldset {
 
 .view-history {
   padding: 20px;
+  display: flex;
+  flex-direction: row;
 }
 
 .friends-container {
   margin: 0;
+}
+
+.history-link {
+  color: purple;
+  cursor: pointer;
 }

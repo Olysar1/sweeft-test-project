@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { v4 } from "uuid";
+import addToHistory from "../redux/historyActions";
 import "../Styles.css";
 
 const UsersComponent = ({ userId }) => {
   const [userInfo, setUserInfo] = useState({ list: [], pagination: {} });
   const [page, setPage] = useState(1);
   const [firstLoad, setFirstLoad] = useState(true);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,8 +62,13 @@ const UsersComponent = ({ userId }) => {
     }
   };
 
-  const handleUserClick = (userId) => {
-    navigate(`/user/${userId}`);
+  const handleUserClick = (user) => {
+    navigate(`/user/${user.id}`);
+    dispatch(addToHistory(user));
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -69,11 +77,11 @@ const UsersComponent = ({ userId }) => {
         {userInfo.list?.map((item) => {
           return (
             <div
-              onClick={() => handleUserClick(item.id)}
+              onClick={() => handleUserClick(item)}
               className="item-container"
               key={v4()}
             >
-              <img src={item.imageUrl} alt="user" />
+              <img src={item.imageUrl} alt={`user${item.id}`} />
               <div className="inner-text">
                 <strong>{`${item.prefix} ${item.name} ${item.lastName}`}</strong>
                 <div>{item.title}</div>
